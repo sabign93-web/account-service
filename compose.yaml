@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:14.23-alpine3.24
+    container_name: account-service-postgres
+    environment:
+      POSTGRES_DB: account_db
+      POSTGRES_USER: account_service
+      POSTGRES_PASSWORD: account_service_pwd
+    ports:
+      - "5432:5432"
+    volumes:
+      - account_postgres_data:/var/lib/postgresql/data
+
+  account-service:
+    build: .
+    container_name: account-service-app
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/account_db
+      SPRING_DATASOURCE_USERNAME: account_service
+      SPRING_DATASOURCE_PASSWORD: account_service_pwd
+    ports:
+      - "8080:8080"
+
+volumes:
+  account_postgres_data:
