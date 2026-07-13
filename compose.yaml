@@ -21,7 +21,7 @@ services:
       SPRING_DATASOURCE_USERNAME: account_service
       SPRING_DATASOURCE_PASSWORD: account_service_pwd
     ports:
-      - "8081:8080"
+      - "8082:8080"
 
 volumes:
   account_postgres_data:
