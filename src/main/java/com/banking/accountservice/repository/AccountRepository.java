@@ -2,15 +2,14 @@ package com.banking.accountservice.repository;
 
 import com.banking.accountservice.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Long> {
+public interface AccountRepository extends JpaRepository<Account, Long>, JpaSpecificationExecutor<Account> {
 
-    @Query("SELECT a FROM Account a")
-    public List<Account> getAllAccounts();
 
 }

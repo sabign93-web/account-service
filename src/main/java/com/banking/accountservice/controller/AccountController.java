@@ -1,15 +1,16 @@
 package com.banking.accountservice.controller;
+import com.banking.accountservice.dto.request.AccountSearchRequest;
 import com.banking.accountservice.dto.request.CreateAccountRequest;
 import com.banking.accountservice.dto.response.AccountResponse;
 import com.banking.accountservice.service.AccountService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
 
 @RestController
 
@@ -30,10 +31,17 @@ public class AccountController {
 
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<AccountResponse>> getAllAccounts() {
-        List<AccountResponse> response = accountService.getAllAccounts();
+    @GetMapping
+    public ResponseEntity<Page<AccountResponse>> getAllAccounts(@ModelAttribute AccountSearchRequest request,
+                                                                Pageable pageable) {
+        Page<AccountResponse> response = accountService.getAllAccounts(request, pageable);
         return ResponseEntity.ok(response);
     }
+
+   @GetMapping("/{id}")
+    public ResponseEntity<AccountResponse> getAccountById(@PathVariable Long id){
+        AccountResponse response = accountService.getAccountById(id);
+        return ResponseEntity.ok(response);
+   }
 
 }

@@ -1,7 +1,10 @@
 package com.banking.accountservice.service;
 
+import com.banking.accountservice.dto.request.AccountSearchRequest;
 import com.banking.accountservice.dto.request.CreateAccountRequest;
 import com.banking.accountservice.dto.response.AccountResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.banking.accountservice.entity.Account;
 import org.springframework.http.ResponseEntity;
 
@@ -11,5 +14,10 @@ public interface AccountService {
 
     AccountResponse createAccount(CreateAccountRequest request);
 
-    List<AccountResponse> getAllAccounts();
+    Page<AccountResponse> getAllAccounts(
+            AccountSearchRequest request,
+            Pageable pageable
+    );
+
+    AccountResponse getAccountById(Long id);
 }
