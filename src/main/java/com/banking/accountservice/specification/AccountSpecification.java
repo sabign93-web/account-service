@@ -1,6 +1,7 @@
 package com.banking.accountservice.specification;
 
 import com.banking.accountservice.entity.Account;
+import com.banking.accountservice.entity.Account_;
 import com.banking.accountservice.enums.AccountStatus;
 import com.banking.accountservice.enums.Currency;
 import jakarta.persistence.criteria.Expression;
@@ -21,13 +22,13 @@ public final class AccountSpecification {
 
             Predicate ownerNamePredicate =
                     criteriaBuilder.like(
-                            criteriaBuilder.lower(root.get("ownerName")),
+                            criteriaBuilder.lower(root.get(Account_.ownerName)),
                             "%" + search.toLowerCase() + "%"
                     );
 
             Predicate ibanPredicate =
                     criteriaBuilder.like(
-                            criteriaBuilder.lower(root.get("iban")),
+                            criteriaBuilder.lower(root.get(Account_.iban)),
                             "%" + search.toLowerCase() + "%"
                     );
 
@@ -45,7 +46,7 @@ public final class AccountSpecification {
 
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(
-                        root.get("currency"),
+                        root.get(Account_.currency),
                         currency
                 );
     }
@@ -57,7 +58,7 @@ public final class AccountSpecification {
 
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(
-                        root.get("status"),
+                        root.get(Account_.status),
                         status
                 );
     }
