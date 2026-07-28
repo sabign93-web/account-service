@@ -52,4 +52,17 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(response);
     }
+    @ExceptionHandler(InvalidSortFieldException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidSortFieldException(
+            InvalidSortFieldException ex) {
+
+        ApiErrorResponse response = ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(ex.getMessage())
+                .errors(null)
+                .build();
+
+        return ResponseEntity.badRequest().body(response);
+    }
 }
