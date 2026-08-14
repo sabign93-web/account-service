@@ -1,10 +1,15 @@
 server:
   port: 8081
+  tomcat:
+    threads:
+      max: 5
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/account_db
     username: account_service
     password: account_service_pwd
+    hikari:
+      maximum-pool-size: 2
     driver-class-name: org.postgresql.Driver
 
   jpa:

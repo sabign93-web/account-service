@@ -8,6 +8,7 @@ import com.banking.accountservice.enums.AccountStatus;
 import com.banking.accountservice.enums.Currency;
 import com.banking.accountservice.exception.AccountNotFoundException;
 import com.banking.accountservice.repository.AccountRepository;
+import com.banking.accountservice.util.IbanGenerator;
 import com.banking.accountservice.validation.SortValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,6 +43,9 @@ import static org.mockito.Mockito.when;
     @InjectMocks
     private AccountServiceImpl accountService;
 
+    @Mock
+    private IbanGenerator ibanGenerator;
+
     @Test
     void shouldCreateAccount() {
 
@@ -63,6 +67,8 @@ import static org.mockito.Mockito.when;
 
         when(accountRepository.save(any(Account.class)))
                 .thenReturn(savedAccount);
+        when(ibanGenerator.generateIban())
+                .thenReturn("FI7365381039307166");
 
         // Act
         AccountResponse response =
@@ -86,7 +92,7 @@ import static org.mockito.Mockito.when;
         assertEquals(new BigDecimal("10.00"), accountSent.getBalance());
         assertEquals(Currency.EUR, accountSent.getCurrency());
         assertEquals(AccountStatus.ACTIVE, accountSent.getStatus());
-        assertEquals("FI123456789012345676", accountSent.getIban());
+        assertEquals("FI7365381039307166", accountSent.getIban());
     }
 
     @Test
