@@ -11,6 +11,7 @@ import com.banking.accountservice.mapper.AccountMapper;
 import com.banking.accountservice.repository.AccountRepository;
 import com.banking.accountservice.service.AccountService;
 import com.banking.accountservice.specification.AccountSpecification;
+import com.banking.accountservice.util.IbanGenerator;
 import com.banking.accountservice.validation.SortValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -41,6 +42,7 @@ public class AccountServiceImpl implements AccountService {
             Account_.CREATED_AT,
             Account_.UPDATED_AT
     );
+    private final IbanGenerator ibanGenerator;
 
     @Override
     public AccountResponse createAccount(CreateAccountRequest request) {
@@ -50,7 +52,7 @@ public class AccountServiceImpl implements AccountService {
                 .balance(request.getInitialBalance())
                 .currency(request.getCurrency())
                 .status(AccountStatus.ACTIVE)
-                .iban("FI123456789012345676")
+                .iban(ibanGenerator.generateIban())
                 .build();
         Account savedAccount = accountRepository.save(account);
 
