@@ -40,6 +40,7 @@ public class AccountController {
 
    @GetMapping("/{id}")
     public ResponseEntity<AccountResponse> getAccountById(@PathVariable Long id){
+       System.out.println("Request thread: " + Thread.currentThread().getName());
         AccountResponse response = accountService.getAccountById(id);
         return ResponseEntity.ok(response);
    }
