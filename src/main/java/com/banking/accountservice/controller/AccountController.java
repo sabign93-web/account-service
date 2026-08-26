@@ -1,7 +1,9 @@
 package com.banking.accountservice.controller;
 import com.banking.accountservice.dto.request.AccountSearchRequest;
+import com.banking.accountservice.dto.request.BalanceTransferRequest;
 import com.banking.accountservice.dto.request.CreateAccountRequest;
 import com.banking.accountservice.dto.response.AccountResponse;
+import com.banking.accountservice.dto.response.BalanceTransferResponse;
 import com.banking.accountservice.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -23,7 +25,9 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping
-    public ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest request) {
+    public ResponseEntity<AccountResponse> createAccount(
+            @Valid @RequestBody CreateAccountRequest request) {
+
         AccountResponse response = accountService.createAccount(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -39,10 +43,20 @@ public class AccountController {
     }
 
    @GetMapping("/{id}")
-    public ResponseEntity<AccountResponse> getAccountById(@PathVariable Long id){
+    public ResponseEntity<AccountResponse> getAccountById(
+            @PathVariable Long id) {
        System.out.println("Request thread: " + Thread.currentThread().getName());
         AccountResponse response = accountService.getAccountById(id);
         return ResponseEntity.ok(response);
    }
 
+    @PostMapping("/balance-transfer")
+    public ResponseEntity<BalanceTransferResponse> transferBalance(
+            @Valid @RequestBody BalanceTransferRequest request) {
+
+        BalanceTransferResponse response =
+                accountService.transferBalance(request);
+
+        return ResponseEntity.ok(response);
+    }
 }
